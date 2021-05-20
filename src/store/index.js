@@ -2,16 +2,20 @@ import { defineStore } from "pinia";
 export const useStore = defineStore({
   id: "useStore",
   state: () => ({
-    todo: "",
     items: [
       { id: 1, label: "Drink Coffee", important: false, done: false },
       { id: 2, label: "Learn Vue", important: true, done: false },
       { id: 3, label: "Make Awesome App", important: false, done: false },
     ],
     selectFilter: "all",
+    searchValue: "",
   }),
   getters: {
-    getTodo: (state) => state.todo,
+    getFilteredItems: (state) => {
+      return state.items.filter((el) =>
+        el.label.toLowerCase().includes(state.searchValue)
+      );
+    },
     getTodos: (state) => {
       switch (state.selectFilter) {
         case "all":
@@ -25,7 +29,6 @@ export const useStore = defineStore({
     getMoreTodo(state) {
       return state.items.length - this.getNeedTodo;
     },
-
     getNeedTodo: (state) =>
       state.items.reduce((start, next) => start + +next.done || 0, 0),
   },

@@ -53,12 +53,10 @@ import { useStore } from "../store";
 export default {
   name: "TheSearch",
   data() {
-    return {
-      searchValue: "",
-    };
+    return {};
   },
   computed: {
-    ...mapWritableState(useStore, ["selectFilter"]),
+    ...mapWritableState(useStore, ["selectFilter", "searchValue"]),
   },
 };
 </script>

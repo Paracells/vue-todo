@@ -2,7 +2,7 @@
   <div class="todo-app">
     <the-header />
     <the-search />
-    <todo-list :items="getTodos" class="mt-4" />
+    <todo-list :items="getFilteredItems" class="mt-4" />
     <todo-list-item-add />
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   components: { TheHeader, TheSearch, TodoList, TodoListItemAdd },
   data: () => ({}),
   computed: {
-    ...mapState(useStore, ["getTodos"]),
+    ...mapState(useStore, ["getFilteredItems"]),
   },
 };
 </script>
