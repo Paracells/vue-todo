@@ -46,17 +46,19 @@
       <label class="btn btn-outline-warning" for="btnradio3">Done</label>
     </div>
   </div>
-  {{ selectFilter }}
 </template>
 <script>
-import { mapState } from "pinia";
+import { mapWritableState } from "pinia";
+import { useStore } from "../store";
 export default {
   name: "TheSearch",
   data() {
     return {
       searchValue: "",
-      selectFilter: "",
     };
+  },
+  computed: {
+    ...mapWritableState(useStore, ["selectFilter"]),
   },
 };
 </script>

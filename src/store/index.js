@@ -8,11 +8,20 @@ export const useStore = defineStore({
       { id: 2, label: "Learn Vue", important: true, done: false },
       { id: 3, label: "Make Awesome App", important: false, done: false },
     ],
-    sort: "",
+    selectFilter: "all",
   }),
   getters: {
     getTodo: (state) => state.todo,
-    getTodos: (state) => state.items,
+    getTodos: (state) => {
+      switch (state.selectFilter) {
+        case "all":
+          return state.items;
+        case "done":
+          return state.items.filter((el) => el.done);
+        case "active":
+          return state.items.filter((el) => el.important || !el.done);
+      }
+    },
     getMoreTodo(state) {
       return state.items.length - this.getNeedTodo;
     },
@@ -26,7 +35,6 @@ export const useStore = defineStore({
         (start, next) => Math.max(start, next.id),
         0
       );
-      console.log(maxId);
       const toDo = {
         id: ++maxId,
         label: todo,
