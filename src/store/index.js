@@ -12,18 +12,21 @@ export const useStore = defineStore({
   }),
   getters: {
     getFilteredItems: (state) => {
-      return state.items.filter((el) =>
-        el.label.toLowerCase().includes(state.searchValue)
-      );
-    },
-    getTodos: (state) => {
-      switch (state.selectFilter) {
-        case "all":
-          return state.items;
-        case "done":
-          return state.items.filter((el) => el.done);
-        case "active":
-          return state.items.filter((el) => el.important || !el.done);
+      if (state.searchValue) {
+        state.selectFilter = "all";
+        return state.items.filter((el) =>
+          el.label.toLowerCase().includes(state.searchValue)
+        );
+      } else {
+        switch (state.selectFilter) {
+          case "all":
+            return state.items;
+          case "done":
+            return state.items.filter((el) => el.done);
+          case "active":
+            return state.items.filter((el) => el.important || !el.done);
+          default:
+        }
       }
     },
     getMoreTodo(state) {
